@@ -34,9 +34,13 @@ pix-llm-eval/
    `result.*`, render a `result.png` where applicable, and record
    `meta.md`.
 4. **Score with a different model.** A **judge model** — never the model
-   being tested — copies `criteria.md` into the run directory as
-   `score.md` and fills in `Score` / `Notes`, citing verifiable evidence
-   (measured contrast, pixel checks, parsed source) for each item. The
+   being tested** — copies `criteria.md` into the run directory as
+   `score.md` and fills in `Score` / `Notes`. Judge vision-first: read
+   `result.png` directly and score qualitative items (presence, layout,
+   aesthetics) from the image, then run only targeted numeric spot-checks
+   for the claims that need a number (contrast ratio, font size in
+   source, path arity / clip probes) — not a full battery every time.
+   Evidence lines cite the measurement or the visual observation. The
    judge records its own name in `score.md`.
 5. **Human spot-check.** You review the judge's evidence for the
    subjective items and override where you disagree.
@@ -67,9 +71,11 @@ pix-llm-eval/
   edit its own `score.md`. Scoring is always done by a different judge
   model (or by you). A self-score found in the wild gets replaced, with
   the original claim noted in `meta.md`.
-- Every score line must carry checkable evidence (measurement, script
-  output, pixel/sample check) — not impressions. Subjective items (e.g.
-  aesthetics) are marked as such and open to your override.
+- Every score line must carry checkable evidence — a measurement or a
+  specific visual observation (e.g. "wire crosses node body at y≈350"),
+  not a vague impression. Numeric spot-checks are reserved for claims
+  graded on a number (contrast, sizes, overflow); subjective items
+  (e.g. aesthetics) are marked as such and open to your override.
 - One run = one directory. Never overwrite a previous run; re-running
   means a new directory (add a suffix, e.g. `001-svg-test-2`).
 - Keep case prompts immutable once scored. If a case must change, bump

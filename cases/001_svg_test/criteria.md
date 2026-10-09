@@ -4,9 +4,14 @@ Score each item, then sum. Max total: 10.
 Fill this out in `runs/<model>/001-svg-test/score.md` (copy this file).
 
 **Judge = a model other than the one under test. Self-scoring is not
-allowed.** Record the judge's name in the scorecard, and cite verifiable
-evidence (measurement, script output, pixel check) per line — impressions
-only for items explicitly marked subjective.
+allowed.** Record the judge's name in the scorecard.
+
+**How to judge (vision-first):** look at `result.png` first and score
+presence/layout/aesthetic items straight from the image. Then run a
+small number of targeted spot-checks only where a graded claim needs a
+number (contrast ratio, exact font size, path validity, 1–3px edge
+clips). Cite either the measurement or the observed detail per line —
+impressions only for items explicitly marked subjective.
 
 | # | Criterion | Weight | Score | Notes |
 |---|-----------|--------|-------|-------|
@@ -25,7 +30,9 @@ only for items explicitly marked subjective.
 
 ## Reference checks
 
-- Contrast: pick the white text color and its underlying fill, verify
-  ratio ≥ 7:1 (e.g. WebAIM contrast checker).
-- Render: open the SVG in a browser / rsvg-convert, screenshot to PNG,
-  then judge visually.
+- **Default: eyeball `result.png`** — presence, hierarchy, obvious
+  defects (clipping, overlaps, dead space) are judged visually.
+- **Spot-check with a number only when a score depends on it:**
+  - item 8: contrast ratio of white text vs its actual fill (must be ≥ 7:1)
+  - items 5/6: font-size / gradient stops in the SVG source
+  - item 1: one rsvg-convert render + XML/path sanity (validity only)
