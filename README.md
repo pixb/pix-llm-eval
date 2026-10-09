@@ -28,14 +28,19 @@ pix-llm-eval/
 1. **Define the case.** Create `cases/<case_id>/prompt.md` and
    `criteria.md`. The rubric must be fixed before the run — never write
    criteria after seeing the result.
-2. **Run.** In an agent conversation, give the model the prompt, collect
-   its output.
+2. **Run.** In an agent conversation, give the model under test the
+   prompt, collect its output. This model only *produces* output.
 3. **Archive.** Create `runs/<model>/<case_id>/`, save the raw output as
    `result.*`, render a `result.png` where applicable, and record
    `meta.md`.
-4. **Score.** Copy `criteria.md` into that directory as `score.md` and
-   fill in the `Score` / `Notes` columns.
-5. **Report.** Add a row for the model in `report.md`.
+4. **Score with a different model.** A **judge model** — never the model
+   being tested — copies `criteria.md` into the run directory as
+   `score.md` and fills in `Score` / `Notes`, citing verifiable evidence
+   (measured contrast, pixel checks, parsed source) for each item. The
+   judge records its own name in `score.md`.
+5. **Human spot-check.** You review the judge's evidence for the
+   subjective items and override where you disagree.
+6. **Report.** Add a row for the model in `report.md`.
 
 ## Naming
 
@@ -58,9 +63,14 @@ pix-llm-eval/
 
 ## Rules
 
+- **No self-scoring.** The model that produced a run may never write or
+  edit its own `score.md`. Scoring is always done by a different judge
+  model (or by you). A self-score found in the wild gets replaced, with
+  the original claim noted in `meta.md`.
+- Every score line must carry checkable evidence (measurement, script
+  output, pixel/sample check) — not impressions. Subjective items (e.g.
+  aesthetics) are marked as such and open to your override.
 - One run = one directory. Never overwrite a previous run; re-running
   means a new directory (add a suffix, e.g. `001-svg-test-2`).
 - Keep case prompts immutable once scored. If a case must change, bump
   its ID rather than editing in place.
-- Scorecards are for humans; an agent may fill them in, but you are the
-  one who checks them.

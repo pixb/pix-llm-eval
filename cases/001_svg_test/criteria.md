@@ -3,6 +3,11 @@
 Score each item, then sum. Max total: 10.
 Fill this out in `runs/<model>/001-svg-test/score.md` (copy this file).
 
+**Judge = a model other than the one under test. Self-scoring is not
+allowed.** Record the judge's name in the scorecard, and cite verifiable
+evidence (measurement, script output, pixel check) per line — impressions
+only for items explicitly marked subjective.
+
 | # | Criterion | Weight | Score | Notes |
 |---|-----------|--------|-------|-------|
 | 1 | SVG is valid and renders standalone at 1200×675 (no external refs, no missing fonts breaking layout) | 2 | /2 | |
