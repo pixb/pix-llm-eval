@@ -1,1 +1,6 @@
 .anet/
+
+# Run results stay local-only: a new model under test must never see
+# prior runs (it would contaminate the test). Purged manually per test.
+runs/
+

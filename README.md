@@ -23,6 +23,14 @@ pix-llm-eval/
 └── README.md
 ```
 
+`runs/` is **git-ignored** — results live only on your machine. Reasons:
+(1) the model under test reads this working directory, and seeing prior
+runs would contaminate the test; (2) scores are yours, not the repo's.
+Before each test, **you decide** whether to wipe old results first
+(`rm -rf runs/<model>` or all of `runs/`) so nothing can be referenced.
+`report.md` stays committed — if you want scores hidden too, move or
+ignore it as well.
+
 ## Workflow
 
 1. **Define the case.** Create `cases/<case_id>/prompt.md` and
@@ -80,3 +88,6 @@ pix-llm-eval/
   means a new directory (add a suffix, e.g. `001-svg-test-2`).
 - Keep case prompts immutable once scored. If a case must change, bump
   its ID rather than editing in place.
+- `runs/` never enters git (ignored + purged from history). Whether to
+  wipe old run results before a new test is **your call each time** —
+  wipe when the model under test must not see earlier outputs.
