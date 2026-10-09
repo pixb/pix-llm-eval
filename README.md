@@ -12,6 +12,9 @@ pix-llm-eval/
 │   └── <case_id>/
 │       ├── prompt.md            # the prompt sent to the model
 │       └── criteria.md          # scoring rubric, defined BEFORE running
+├── scripts/
+│   └── generate_z_image.py      # z-image n8n webhook helper (body POST)
+├── .env.example                 # copy to .env; set N8N_WEBHOOK_URL
 ├── runs/                        # one directory per model
 │   └── <model_name>/
 │       └── <case_id>/
@@ -38,6 +41,11 @@ ignore it as well.
    criteria after seeing the result.
 2. **Run.** In an agent conversation, give the model under test the
    prompt, collect its output. This model only *produces* output.
+   For text-to-image cases (e.g. `002_zimage_prompt`): save the model's
+   prompt as `runs/<model>/<case_id>/prompt.txt`, then generate the
+   image with this repo's own helper —
+   `cp .env.example .env` (set `N8N_WEBHOOK_URL`), then
+   `python3 scripts/generate_z_image.py runs/<model>/<case_id>/prompt.txt runs/<model>/<case_id>/result.png`.
 3. **Archive.** Create `runs/<model>/<case_id>/`, save the raw output as
    `result.*`, render a `result.png` where applicable, and record
    `meta.md`.
@@ -70,6 +78,8 @@ ignore it as well.
 - Driven by: <agent / manual>
 - Settings: temperature, system prompt, single turn or multi-turn
 - Output: <raw / with tool calls / regenerations>
+- Image gen (if any): model + size + **seed as returned** (seeds are
+  random by design — log for traceability, never fix them)
 - Notes: anything that affects reproducibility
 ```
 
