@@ -5,4 +5,4 @@ Cross-model comparison. One row per run, one column per case
 
 | Model | 001_svg_test (/10) | Total | Date | Notes |
 |-------|--------------------|-------|------|-------|
-| MiMo-V2.6-Flash | | | | |
+| MiMo-V2.6-Flash | 9.7 | 9.7 | 2026-10-09 | self-scored; items 9–10 subjective |
