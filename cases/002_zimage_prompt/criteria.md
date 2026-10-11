@@ -1,7 +1,9 @@
 # Scoring criteria — 002_zimage_prompt
 
-Score each item, then sum. Max total: 10.
-Fill this out in `runs/<model>/002_zimage_prompt/score.md` (copy this file).
+The scorecard table (weights frozen) lives in
+`scorecard.template.md` — the judge copies **that** file into
+`runs/<model>/002_zimage_prompt/score.md` and fills it in. This file
+only defines *how* to judge.
 
 **Judge = a model other than the one under test. Self-scoring is not
 allowed.** Record the judge's name in the scorecard.
@@ -30,18 +32,8 @@ is part of what is being measured. Consequences for the judge:
 - Grade Stage B against prompt *intent*, not against an ideal render:
   penalize a missing/mis-scaled element, not a stylistic coincidence.
 
-| # | Criterion | Weight | Score | Notes |
-|---|-----------|--------|-------|-------|
-| 1 | Output format: single paragraph, pure English, no explanations/markdown | 0.5 | /0.5 | |
-| 2 | CFG=1 safety: zero negation words (no / not / without / avoid …), zero negative-prompt phrasing | 1.5 | /1.5 | count each violation |
-| 3 | Scene coverage: stone stairway + bamboo + mist + light shafts + fallen leaves | 1.5 | /1.5 | 0.5 per missing element, floor 0 |
-| 4 | Figure handling: elderly monk, full-body, clearly a small part of the frame (not dominating) | 1.5 | /1.5 | prompt must state scale/placement |
-| 5 | Style + palette + quality suffix: 工笔淡彩 (gongbi, fine outline + light-colour wash — NOT ink-wash 水墨), emerald-green + pale-gold palette, ends with 8K/high-res suffix | 1.5 | /1.5 | 0.5 each |
-| 6 | Image matches prompt intent: all key elements visible (stair, bamboo, mist, monk sweeping) | 1 | /1 | |
-| 7 | Aesthetic quality: gongbi line work, depth, colour harmony | 1 | /1 | subjective; cite specific observation |
-| 8 | Composition: monk small in frame, stairs lead the eye, no clipping/extra limbs | 1.5 | /1.5 | |
-
-**Total: ___ / 10**
+**Max total: 10.** Sum the filled scores, then verify with
+`python3 scripts/score_calc.py runs/<model>/002_zimage_prompt/score.md`.
 
 ## Reference checks
 
