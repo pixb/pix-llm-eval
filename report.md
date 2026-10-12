@@ -12,3 +12,37 @@ Cross-model comparison. One row per run, one column per case
 | nemotron-3-super-120b-a12b | 7.45 | 10 | 17.45 | 2026-10-10 | MiMo-V2.6-Flash (independent) | 001: valid SVG (re-render byte-identical to result.png), correct gradient/typography/info bar; deductions — title+queue bars merge into one empty strip with no text/controls (0.5), 3 nodes are bare unlabeled circles (0.5), wires terminate at circle centers (0.25), white-on-gradient ≈4.0–4.2:1 fails AAA (0), "comfyui" collides with the editor-window edge (x709 straddles x=850), sparse interior (−0.3); source has a malformed comment line (`-- Nodes…`, clipped invisible). 002: cleanest prompt across all runs — 0 negation hits (mechanical scan), all 5 scene elements, explicit corner/full-body/scale figure handling, gongbi+emerald/gold+8K suffix, single pure-English paragraph; render matches intent, monk ~11% frame height, no limb defects → 10/10. |
 | nemotron-3-ultra-550b-a55b | 8.8 | 10 | 18.8 | 2026-10-10 | MiMo-V2.6-Flash (independent) | 001 (dir misnamed `001-svg-test`): valid SVG (re-render byte-identical), full node cards with labeled ports, real port-to-port Beziers, true right-aligned typography (anchor=end x=1140), populated title/queue bars; deductions — white-on-gradient 2.3–4.0:1 fails AAA (0), KSampler param text #fffde7 on orange 2.2–3.2:1 also fails, 3 wires route through the KSampler body over its parameter text, dangling LATENT output (−0.2). 002: same clean-prompt tier as nemotron-super — 0 negation hits, all 5 scene elements, explicit lower-corner/full-body/minimal-space figure handling, gongbi+emerald/gold+8K suffix; render matches intent, monk ~30% frame height accent at stair's lower right, no limb defects → 10/10. |
 | nemotron-3-nano-omni-30b-a3b-reasoning | 7.6 | 9.0 | 16.6 | 2026-10-11 | MiMo-V2.6-Flash (independent) | **Run shipped self-scored** ("Judge: assistant" = producer, all items maxed, empty notes; 002 card also used a self-invented 5×2pt table instead of the frozen 8-item weights) — both invalid cards preserved as `score.assistant-self.md`, replaced. meta.md missing in both cases; 001 result.png missing (judge rendered from result.svg). 001: valid SVG, correct gradient/typography sizes/right-align, but wires are straight `<line>`+arrow markers not Beziers (0.5), queue toolbar absent (0.5), KSampler circle straddles window right edge, labels overflow circles, white-on-gradient 4.47:1 fails AAA (0), sparse layout (−0.4). 002 (graded on the official frozen table): clean format + 0 negation hits + full scene coverage, but gongbi style entirely absent from prompt (photoreal render; −0.5 style), monk placement/full-body unstated (−0.5); render itself strong — monk ~20% frame height, textbook stair leading line, no limb defects. |
+
+## Charts
+
+Models with both cases scored independently (MiMo excluded — invalid
+self-score; laguna-s-2.1 excluded — 001 only).
+
+### Total score (/20)
+
+```mermaid
+xychart-beta
+    title "Total score (001 + 002, max 20)"
+    x-axis ["laguna-xs-2.1", "Inkling", "nemotron-super", "nemotron-ultra", "nemotron-nano"]
+    y-axis "Score" 0 --> 20
+    bar [18.0, 17.75, 17.45, 18.8, 16.6]
+```
+
+### Per-case breakdown (/10 each)
+
+```mermaid
+xychart-beta
+    title "Per-case scores (max 10)"
+    x-axis ["laguna-xs-2.1", "Inkling", "nemotron-super", "nemotron-ultra", "nemotron-nano"]
+    y-axis "Score" 0 --> 10
+    bar [9.0, 8.5, 7.45, 8.8, 7.6]
+    bar [9.0, 9.25, 10, 10, 9.0]
+```
+
+Legend: first bar = 001_svg_test, second bar = 002_zimage_prompt.
+
+Observations: 002 (image-prompt generation) scores are systematically
+higher than 001 (SVG poster composition) — every model ≥9.0 on 002
+except nano (9.0, still its own stronger case), while 001 spreads
+7.45–8.8. nemotron-ultra leads overall; the ranking gaps are within
+±0.4 per case, so treat ties as ties.
